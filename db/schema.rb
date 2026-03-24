@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_24_070655) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_24_071303) do
   create_table "ideas", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", null: false
@@ -18,5 +18,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_24_070655) do
     t.integer "difficulty"
     t.string "title"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "weekly_schedules", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "idea_1_id"
+    t.integer "idea_2_id"
+    t.integer "idea_3_id"
+    t.integer "idea_4_id"
+    t.integer "idea_5_id"
+    t.integer "idea_6_id"
+    t.integer "idea_7_id"
+    t.datetime "updated_at", null: false
+    t.string "uuid"
+    t.index ["uuid"], name: "index_weekly_schedules_on_uuid"
   end
 end
