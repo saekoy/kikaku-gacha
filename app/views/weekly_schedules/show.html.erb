@@ -1,4 +1,77 @@
-<div>
-  <h1 class="font-bold text-4xl">WeeklySchedules#show</h1>
-  <p>Find me in app/views/weekly_schedules/show.html.erb</p>
+<div class="min-h-screen bg-indigo-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    
+    <%# ヘッダーセクション（保存版） %>
+    <div class="md:flex md:items-center md:justify-between mb-10 border-b border-indigo-200 pb-6">
+      <div class="flex-1 min-w-0">
+        <h1 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          来週の配信予定 <span class="text-indigo-600 text-lg block md:inline md:ml-2">#企画ガチャ結果</span>
+        </h1>
+        <p class="mt-2 text-sm text-gray-500 italic">
+          このURLを保存・シェアすれば、いつでもこの結果を確認できます。
+        </p>
+      </div>
+
+      <div class="mt-4 flex md:mt-0 md:ml-4 gap-3">
+        <%# トップに戻って新しくガチャを回す %>
+        <%= link_to root_path, class: "inline-flex items-center px-6 py-3 border border-indigo-300 rounded-full shadow-sm text-base font-medium text-indigo-700 bg-white hover:bg-indigo-50 transition-all" do %>
+          🔄 別のガチャを回す
+        <% end %>
+        
+        <%# シェアボタン（後で機能を付けます） %>
+        <button onclick="copyUrl()" class="inline-flex items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all">
+          🔗 URLをコピー
+        </button>
+      </div>
+    </div>
+
+    <%# メインのグリッドレイアウト %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      
+      <% @ideas.each_with_index do |idea, index| %>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex flex-col h-full relative overflow-hidden">
+          
+          <div class="absolute top-0 right-0 bg-indigo-500 text-white px-4 py-1 rounded-bl-xl font-bold text-xs">
+            <%= index + 1 %>日目
+          </div>
+
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+              <%= idea.category %>
+            </span>
+            <div class="flex text-yellow-400 text-xs">
+              <% idea.difficulty.times do %>
+                <span>★</span>
+              <% end %>
+              <% (5 - idea.difficulty).times do %>
+                <span class="text-gray-200">★</span>
+              <% end %>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight">
+            <%= idea.title %>
+          </h3>
+          
+          <p class="text-gray-600 text-sm flex-grow">
+            <%= idea.description %>
+          </p>
+        </div>
+      <% end %>
+
+    </div>
+
+    <%# PCのみ：フッターにTipsを表示 %>
+    <div class="mt-12 text-center text-gray-400 text-sm">
+      URL: <%= request.original_url %>
+    </div>
+
+  </div>
 </div>
+
+<script>
+  function copyUrl() {
+    navigator.clipboard.writeText(window.location.href);
+    alert("URLをコピーしました！X（Twitter）などでシェアしてみてね！");
+  }
+</script>
