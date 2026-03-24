@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-indigo-50 py-8 px-4 sm:px-6 lg:px-8">
   <div class="max-w-7xl mx-auto">
-    
+
     <%# ヘッダーセクション（保存版） %>
     <div class="md:flex md:items-center md:justify-between mb-10 border-b border-indigo-200 pb-6">
       <div class="flex-1 min-w-0">
@@ -17,20 +17,32 @@
         <%= link_to root_path, class: "inline-flex items-center px-6 py-3 border border-indigo-300 rounded-full shadow-sm text-base font-medium text-indigo-700 bg-white hover:bg-indigo-50 transition-all" do %>
           🔄 別のガチャを回す
         <% end %>
-        
-        <%# シェアボタン（後で機能を付けます） %>
-        <button onclick="copyUrl()" class="inline-flex items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all">
-          🔗 URLをコピー
+
+        <%# X（Twitter）シェアボタン %>
+        <%
+          share_text = "来週の配信予定が決まりました！✨\n今回のテーマは「#{@ideas.first.title}」など！\n"
+          share_url = request.original_url
+          hashtags = "配信ネタガチャ,REALITY"
+          x_share_url = "https://twitter.com/intent/tweet?text=#{u(share_text)}&url=#{u(share_url)}&hashtags=#{u(hashtags)}"
+        %>
+        <%= link_to x_share_url, target: "_blank", rel: "noopener", class: "inline-flex items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-black hover:bg-gray-800 transition-all" do %>
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Xでポスト
+        <% end %>
+
+        <%# URLコピーボタン（控えめに変更） %>
+        <button onclick="copyUrl()" class="p-3 border border-gray-300 rounded-full text-gray-500 hover:bg-gray-50 transition-all" title="URLをコピー">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
         </button>
       </div>
     </div>
 
     <%# メインのグリッドレイアウト %>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      
+
       <% @ideas.each_with_index do |idea, index| %>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex flex-col h-full relative overflow-hidden">
-          
+
           <div class="absolute top-0 right-0 bg-indigo-500 text-white px-4 py-1 rounded-bl-xl font-bold text-xs">
             <%= index + 1 %>日目
           </div>
@@ -52,7 +64,7 @@
           <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight">
             <%= idea.title %>
           </h3>
-          
+
           <p class="text-gray-600 text-sm flex-grow">
             <%= idea.description %>
           </p>
