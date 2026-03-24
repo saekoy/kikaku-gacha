@@ -13,7 +13,10 @@
       </div>
 
       <div class="mt-4 flex md:mt-0 md:ml-4 gap-3">
-        <%= button_to weekly_schedules_path, method: :post, class: "inline-flex items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all transform hover:scale-105 active:scale-95" do %>
+        <%= button_to weekly_schedules_path, 
+                      method: :post, 
+                      data: { disable_with: "🪄 シャッフル中..." },
+                      class: "inline-flex items-center px-8 py-4 border border-transparent rounded-full shadow-lg text-lg font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50" do %>
           ✨ ガチャを回す
         <% end %>
       </div>
@@ -24,7 +27,7 @@
 
       <%# @ideas (DBから取得したデータ) をループさせる %>
       <% @ideas.each_with_index do |idea, index| %>
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300 p-5 flex flex-col h-full relative overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-500 p-5 flex flex-col h-full relative overflow-hidden animate-in fade-in slide-in-from-bottom-8 fill-mode-both" style="animation-delay: <%= index * 100 %>ms">
 
           <%# インデックス（0〜6）を使って「何日目」か表示 %>
           <div class="absolute top-0 right-0 bg-indigo-500 text-white px-4 py-1 rounded-bl-xl font-bold text-xs">
