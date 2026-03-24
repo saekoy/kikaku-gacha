@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "weekly_schedules/create"
+  get "weekly_schedules/show"
   root "ideas#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
