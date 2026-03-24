@@ -13,10 +13,9 @@
       </div>
 
       <div class="mt-4 flex md:mt-0 md:ml-4 gap-3">
-        <%# このボタンを明日「ガチャ機能」と接続します %>
-        <button class="inline-flex items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all transform hover:scale-105">
+        <%= link_to root_path, class: "inline-flex items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all transform hover:scale-105 active:scale-95" do %>
           ✨ ガチャを回す
-        </button>
+        <% end %>
       </div>
     </div>
 
