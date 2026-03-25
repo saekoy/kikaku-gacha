@@ -1,4 +1,21 @@
 class WeeklySchedulesController < ApplicationController
+  # 表示処理（専用URLを開いた時に動く）
+  def show
+    # URLに含まれるuuidを使って、DBからデータを探す
+    @schedule = WeeklySchedule.find_by!(uuid: params[:uuid])
+
+    # 7つのIDから、それぞれのIdeaオブジェクトを復元する
+    @ideas = [
+      Idea.find(@schedule.idea_1_id),
+      Idea.find(@schedule.idea_2_id),
+      Idea.find(@schedule.idea_3_id),
+      Idea.find(@schedule.idea_4_id),
+      Idea.find(@schedule.idea_5_id),
+      Idea.find(@schedule.idea_6_id),
+      Idea.find(@schedule.idea_7_id)
+    ]
+  end
+
   # 保存処理（ガチャボタンを押した時に動く）
   def create
     # DBからランダムに7件取得
@@ -19,24 +36,7 @@ class WeeklySchedulesController < ApplicationController
       # 保存に成功したら、そのUUIDのページ（show）へジャンプ
       redirect_to weekly_schedule_path(@schedule.uuid)
     else
-      redirect_to root_path, alert: "ガチャに失敗しました。"
+      redirect_to root_path, alert: 'ガチャに失敗しました。'
     end
-  end
-
-  # 表示処理（専用URLを開いた時に動く）
-  def show
-    # URLに含まれるuuidを使って、DBからデータを探す
-    @schedule = WeeklySchedule.find_by!(uuid: params[:uuid])
-
-    # 7つのIDから、それぞれのIdeaオブジェクトを復元する
-    @ideas = [
-      Idea.find(@schedule.idea_1_id),
-      Idea.find(@schedule.idea_2_id),
-      Idea.find(@schedule.idea_3_id),
-      Idea.find(@schedule.idea_4_id),
-      Idea.find(@schedule.idea_5_id),
-      Idea.find(@schedule.idea_6_id),
-      Idea.find(@schedule.idea_7_id)
-    ]
   end
 end
