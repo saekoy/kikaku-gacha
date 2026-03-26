@@ -36,7 +36,7 @@ class WeeklySchedulesController < ApplicationController
       # 保存に成功したら、そのUUIDのページ（show）へジャンプ
       redirect_to weekly_schedule_path(@schedule.uuid)
     else
-      redirect_to root_path, alert: 'ガチャに失敗しました。'
+      redirect_to root_path, alert: I18n.t('weekly_schedules.create.failure')
     end
   end
 end

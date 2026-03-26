@@ -1,0 +1,4 @@
+ja:
+  weekly_schedules:
+    create:
+      failure: "ガチャに失敗しました。"
