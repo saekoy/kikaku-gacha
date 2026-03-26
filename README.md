@@ -1,24 +1,41 @@
-# README
+# 配信ネタ・ガチャ (kikaku-gacha) 🪄
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**「今日の配信、何しよう？」を3秒で解決。**
+ライブ配信プラットフォーム（REALITY等）で活動する配信者のための、1週間企画提案・共有ツールです。
 
-Things you may want to cover:
+## 🌐 アプリケーション概要
+日々の配信内容に悩む配信者の「企画立案コスト」を削減することを目的としたアプリケーションです。
+ボタン一つで1週間分の配信ネタを提案し、生成された予定表を独自のURLでリスナーやSNSへ簡単に共有できる仕組みを提供します。
 
-* Ruby version
+## 🚀 主な機能
+- **1週間企画ガチャ**: データベース内の企画案から、月曜〜日曜までの7日分をランダムに選出。
+- **UUIDによるデータ保持**: 会員登録を不要にするため、UUID（ユニークなID）を用いた個別URL発行機能を搭載。
+- **SNS連携 (X / 旧Twitter)**: 生成された予定をハッシュタグ付きでダイレクトにポスト可能。
+- **レスポンシブデザイン**: 配信端末（スマートフォン）での操作を第一に考えたUI/UX。
 
-* System dependencies
+## 🛠 使用技術
+- **Framework**: Ruby on Rails 8.1.2
+- **Frontend**: Hotwire (Turbo / Stimulus), Tailwind CSS
+- **Database**: PostgreSQL (Neon / 本番環境), SQLite3 (開発・テスト環境)
+- **Infrastructure**: Render
+- **Testing**: RSpec, FactoryBot (Model Spec / System Spec), Capybara
+- **Static Analysis**: RuboCop, Brakeman, Bundler-audit
 
-* Configuration
+## 💡 技術的なこだわり・設計意図
 
-* Database creation
+### 1. 最新技術スタック（Rails 8.1）への対応
+最新の Rails 8.1 を採用し、Solid Cache, Solid Queue, Solid Cable を含めたモダンな標準構成を理解・活用しています。アセット管理には Propshaft を使用し、シンプルかつ高速な配信を実現しています。
 
-* Database initialization
+### 2. Hotwire と CSS アニメーションによる UX
+画面遷移を最小限に抑えつつ、ガチャ実行時の「カードが順次表示される時間差アニメーション」を実装。`animation-delay` を用いた動的な演出や、Turbo による非同期的な操作感、ボタンの `disable_with` による二重送信防止など、ユーザーの触感を重視した設計を行っています。
 
-* How to run the test suite
+### 3. ログイン不要で「自分だけのデータ」を扱う設計
+利便性と手軽さを最優先し、ユーザー認証をあえて導入していません。代わりに `WeeklySchedule` モデルに UUID を持たせ、一意のURLを発行することで、認証なしでの「データの永続的な保存」と「セキュアな共有」を両立させました。
 
-* Services (job queues, cache servers, search engines, etc.)
+### 4. 品質保証とCI/CDの構築
+- **自動テスト**: Capybara を用いたシステムテストを導入。トップページからガチャ実行、UUID付き専用ページへの遷移、シェアボタンの確認までの一連のユーザーフローを自動検証しています。
+- **コード品質**: RuboCop による静的解析のほか、セキュリティ面では Brakeman や Bundler-audit を導入。
+- **CI/CD**: GitHub Actions を構築。`RAILS_MASTER_KEY` を安全に管理し、プッシュ時に自動的にテストと品質チェックが実行されるプロフェッショナルな開発フローを実現しました。
 
-* Deployment instructions
-
-* ...
+---
+© 2026 saeko
